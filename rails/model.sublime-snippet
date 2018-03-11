@@ -1,0 +1,20 @@
+<snippet>
+  <content><![CDATA[
+class ${1:Model} < ActiveRecord::Base
+  before_create :generate_random_slug
+
+  def to_param
+    self.slug
+  end
+
+  private
+
+  def generate_random_slug
+    self.slug = SecureRandom.urlsafe_base64
+  end
+end]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>rails_model</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.ruby</scope>
+</snippet>
