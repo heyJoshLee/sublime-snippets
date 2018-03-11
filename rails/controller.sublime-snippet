@@ -1,0 +1,63 @@
+<snippet>
+  <content><![CDATA[
+class ${1:Model}sController < ApplicationController
+
+  before_action :set_${2:model}, only: [:show, :edit, :update, :destroy]
+
+  def index
+    @${2:model}s = ${1:model}.all 
+  end
+
+  def destroy
+    if @${2:model}.destroy
+      flash[:success] = "The ${2:model} was deleted."
+      redirect_to ${2:model}s_path
+    else
+      flash.now[:danger] = "There was a problem and the ${2:model} was not deleted."
+      render :edit
+    end
+  end
+
+  
+  def new
+    @${2:model} = ${1:model}.new
+  end
+
+  def create
+    @${2:model} = ${1:model}.new(${2:model}_params)
+    @${2:model}.user_id = current_user.id
+    if @${2:model}.save
+      flash[:success] = "${1:model} was successfully created."
+      redirect_to @${2:model} 
+    else
+      flash.now[:danger] = "${1:model} was not saved."
+      render :new
+    end
+  end
+
+  def update
+    if @${2:model}.update(${2:model}_params)
+      flash[:success] = "${1:model} was saved."
+      redirect_to ${2:model}_path
+    else
+      render :edit
+    end
+  end
+
+
+  private 
+
+  def ${2:model}_params
+    params.require(:${2:model}).permit!
+  end
+
+  def set_${2:model}
+    @${2:model} = ${1:model}.find_by(slug: params[:id])
+  end
+
+end]]></content>
+  <!-- Optional: Set a tabTrigger to define how to trigger the snippet -->
+  <tabTrigger>rails_controller</tabTrigger>
+  <!-- Optional: Set a scope to limit where the snippet will trigger -->
+  <scope>source.ruby</scope>
+</snippet>
